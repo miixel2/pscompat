@@ -157,9 +157,9 @@ These should be implemented first because they are common, testable, and do not 
 |---|---|---|---|---|
 | 1.1 | `touch.ps1` | `touch` | Done | Supports default create/update behavior plus `-c`, `--no-create`, and `-NoCreate` |
 | 1.2 | `head.ps1` | `head` | Done | Supports file input, stdin input, `-n`, and multi-file headers |
-| 1.3 | `tail.ps1` | `tail` | Planned | Start without `-f`, then add follow mode |
-| 1.4 | `wc.ps1` | `wc` | Planned | Start with `-l`, `-w`, `-c` |
-| 1.5 | `which.ps1` | `which` | Planned | Easy win and useful PATH validation |
+| 1.3 | `tail.ps1` | `tail` | Done | Supports file input, stdin input, `-n`, and multi-file headers |
+| 1.4 | `wc.ps1` | `wc` | Done | Supports default output plus `-l`, `-w`, `-c`, stdin, and `total` |
+| 1.5 | `which.ps1` | `which` | Done | Resolves first PATH match for applications and external scripts |
 
 ### Phase 2 - Non-Conflict Search and Filters
 
@@ -424,6 +424,9 @@ Use this section as the running implementation history.
 - 2026-04-18 - Completed Phase 0 scaffold items 0.1, 0.2, 0.3, 0.4, 0.5, and 0.7. Added `cmds/.gitkeep`, `config/.gitkeep`, `lib/common.ps1`, `lib/pipeline.ps1`, `tests/_TestHelpers.ps1`, `CONVENTIONS.md`, and `ADDING_COMMANDS.md`. Updated `README.md` plus mirrored docs files under `docs/` to clarify root canonical references. Linux-vs-Windows delta: conflict-name commands must still be invoked by explicit script path; no user-facing command behavior is implemented yet. Follow-up work: add `CONTRIBUTING.md` if needed, then begin Sprint 1 with `touch.ps1`.
 - 2026-04-18 - Completed item 1.1 for `touch.ps1`. Added `cmds/touch.ps1`, `tests/touch.Tests.ps1`, and `docs/touch.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default create/update behavior, multi-path handling, and `-c` / `--no-create` / `-NoCreate`. Linux-vs-Windows delta: advanced timestamp flags (`-a`, `-m`, `-d`, `-t`, `-r`) are deferred, and timestamp precision follows Windows/.NET behavior. Follow-up work: proceed to `head.ps1`.
 - 2026-04-18 - Completed item 1.2 for `head.ps1`. Added `cmds/head.ps1`, `tests/head.Tests.ps1`, and `docs/head.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default 10-line output, `-n`, file input, stdin-like pipeline input, and Linux-style multi-file headers. Linux-vs-Windows delta: byte mode (`-c`), negative counts, and quiet/verbose header controls (`-q`, `-v`) are deferred. Follow-up work: proceed to `tail.ps1`.
+- 2026-04-18 - Completed item 1.3 for `tail.ps1`. Added `cmds/tail.ps1`, `tests/tail.Tests.ps1`, and `docs/tail.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default last-10-line output, `-n`, file input, stdin-like pipeline input, `-n 0`, and Linux-style multi-file headers. Linux-vs-Windows delta: follow mode (`-f`), byte mode (`-c`), and relative count forms such as `-n +5` are deferred. Follow-up work: proceed to `wc.ps1`.
+- 2026-04-18 - Completed item 1.4 for `wc.ps1`. Added `cmds/wc.ps1`, `tests/wc.Tests.ps1`, and `docs/wc.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default line/word/byte output, explicit `-l` / `-w` / `-c`, stdin-like pipeline input, multi-file processing, and `total`. Linux-vs-Windows delta: `-m` and `-L` are deferred, and pipeline counting under native PowerShell remains a reconstructed text stream rather than raw Unix pipe bytes. Follow-up work: proceed to `which.ps1`.
+- 2026-04-18 - Completed item 1.5 for `which.ps1`. Added `cmds/which.ps1`, `tests/which.Tests.ps1`, and `docs/which.md`; updated `README.md`, `IMPLEMENTATION_ROADMAP.md`, and `tests/_TestHelpers.ps1`. Scope implemented: first-match PATH resolution for applications and external scripts, multi-name processing, and non-zero exit on misses. Linux-vs-Windows delta: `-a` is deferred, and PowerShell alias/function resolution is intentionally excluded to keep PATH behavior predictable. Follow-up work: Sprint 1 core primitives are complete; proceed to `grep.ps1`.
 
 ---
 

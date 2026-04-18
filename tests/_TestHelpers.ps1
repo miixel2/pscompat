@@ -114,23 +114,62 @@ function Invoke-PsCompatScript {
         [string[]]$ArgumentList = @(),
 
         [AllowNull()]
-        [string]$StdIn
+        [string]$StdIn,
+
+        [hashtable]$EnvironmentVariables = @{}
     )
 
     $resolvedScriptPath = [System.IO.Path]::GetFullPath($ScriptPath)
-    $nativeArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $resolvedScriptPath) + $ArgumentList
-    $argumentText = ($nativeArguments | ForEach-Object {
-        ConvertTo-PsCompatNativeArgument -Value ([string]$_)
-    }) -join ' '
 
     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
     $startInfo.FileName = "powershell.exe"
-    $startInfo.Arguments = $argumentText
     $startInfo.RedirectStandardError = $true
     $startInfo.RedirectStandardInput = $true
     $startInfo.RedirectStandardOutput = $true
     $startInfo.UseShellExecute = $false
     $startInfo.CreateNoWindow = $true
+
+    if ($EnvironmentVariables.Count -gt 0) {
+        $scriptLiteral = ConvertTo-PsCompatSingleQuotedLiteral -Value $resolvedScriptPath
+        $argumentLiterals = @(foreach ($argument in $ArgumentList) {
+            ConvertTo-PsCompatSingleQuotedLiteral -Value ([string]$argument)
+        })
+
+        $argumentText = if ($argumentLiterals.Count -gt 0) {
+            "@(" + ($argumentLiterals -join ", ") + ")"
+        }
+        else {
+            "@()"
+        }
+
+        $environmentAssignments = foreach ($environmentKey in $EnvironmentVariables.Keys) {
+            $keyLiteral = ConvertTo-PsCompatSingleQuotedLiteral -Value ([string]$environmentKey)
+            $valueLiteral = ConvertTo-PsCompatSingleQuotedLiteral -Value ([string]$EnvironmentVariables[$environmentKey])
+            "[System.Environment]::SetEnvironmentVariable($keyLiteral, $valueLiteral, 'Process')"
+        }
+
+        $command = @"
+`$ProgressPreference = 'SilentlyContinue'
+$(($environmentAssignments -join "`r`n"))
+`$pscompatArgs = $argumentText
+& $scriptLiteral @pscompatArgs
+if (`$null -eq `$LASTEXITCODE) {
+    exit 0
+}
+
+exit `$LASTEXITCODE
+"@
+
+        $encodedCommand = [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($command))
+        $startInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -EncodedCommand $encodedCommand"
+    }
+    else {
+        $nativeArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $resolvedScriptPath) + $ArgumentList
+        $argumentText = ($nativeArguments | ForEach-Object {
+            ConvertTo-PsCompatNativeArgument -Value ([string]$_)
+        }) -join ' '
+        $startInfo.Arguments = $argumentText
+    }
 
     $process = New-Object System.Diagnostics.Process
     $process.StartInfo = $startInfo

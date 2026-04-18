@@ -56,9 +56,9 @@ Do not assume that adding `cmds\` to `PATH` will make `tee`, `sort`, `cat`, or o
 |---|---|---|---|
 | `touch` | done | `touch` | Create file, update timestamps, supports `-c` |
 | `head` | done | `head` | First lines from file or stdin, supports `-n` |
-| `tail` | planned | `tail` | Output last N lines of file |
-| `wc` | planned | `wc` | Word, line, and byte counts |
-| `which` | planned | `which` | Locate a command in `PATH` |
+| `tail` | done | `tail` | Last lines from file or stdin, supports `-n` |
+| `wc` | done | `wc` | Line, word, and byte counts with `total` support |
+| `which` | done | `which` | Locate a command in `PATH` |
 | `grep` | planned | `grep` | Search text with regex |
 | `tee` | planned | `tee` | Conflict-name command; explicit script path required |
 
@@ -103,7 +103,10 @@ Invoke-Pester .\tests\ -Output Detailed
 ### Implemented command docs
 
 - [head](docs/head.md)
+- [tail](docs/tail.md)
 - [touch](docs/touch.md)
+- [wc](docs/wc.md)
+- [which](docs/which.md)
 
 ---
 
