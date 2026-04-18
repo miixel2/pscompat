@@ -140,13 +140,13 @@ These are infrastructure tasks, not user-facing commands.
 
 | ID | Item | Status | Notes |
 |---|---|---|---|
-| 0.1 | Create `cmds/`, `lib/`, `tests/`, `docs/`, `config/` if missing | Planned | Create only the minimum structure needed |
-| 0.2 | Create `lib/common.ps1` | Planned | Minimal helpers only: path normalize, stderr writer, exit helper |
-| 0.3 | Create `tests/_TestHelpers.ps1` | Planned | Shared Pester helpers and fixtures |
-| 0.4 | Create `lib/pipeline.ps1` | Planned | Only minimal reusable stdin logic |
-| 0.5 | Align `README.md` with actual repo structure | Planned | Keep docs honest during bootstrap |
+| 0.1 | Create `cmds/`, `lib/`, `tests/`, `docs/`, `config/` if missing | Done | Created tracked scaffold with minimal placeholder files where needed |
+| 0.2 | Create `lib/common.ps1` | Done | Added minimal helpers for path resolution, stderr formatting, and exit code handling |
+| 0.3 | Create `tests/_TestHelpers.ps1` | Done | Added shared process-based script invocation and temp directory helpers |
+| 0.4 | Create `lib/pipeline.ps1` | Done | Added minimal line-buffer helpers for stdin-oriented commands |
+| 0.5 | Align `README.md` with actual repo structure | Done | README now reflects the real scaffold and root documentation paths |
 | 0.6 | Add `CONTRIBUTING.md` skeleton | Planned | Optional but useful after scaffold is stable |
-| 0.7 | Document command-name conflict strategy in repo docs | Planned | Keep invocation expectations explicit from day one |
+| 0.7 | Document command-name conflict strategy in repo docs | Done | Added explicit conflict invocation guidance to README and root command authoring docs |
 | 0.8 | Add project-local multi-agent instruction and skill files | Done | Added shared `.ai/skills/`, `CLAUDE.md`, and `.github/copilot-instructions.md` |
 
 ### Phase 1 - Non-Conflict Core Primitives
@@ -155,8 +155,8 @@ These should be implemented first because they are common, testable, and do not 
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 1.1 | `touch.ps1` | `touch` | Planned | Warm-up and test setup helper |
-| 1.2 | `head.ps1` | `head` | Planned | Simple line slicing |
+| 1.1 | `touch.ps1` | `touch` | Done | Supports default create/update behavior plus `-c`, `--no-create`, and `-NoCreate` |
+| 1.2 | `head.ps1` | `head` | Done | Supports file input, stdin input, `-n`, and multi-file headers |
 | 1.3 | `tail.ps1` | `tail` | Planned | Start without `-f`, then add follow mode |
 | 1.4 | `wc.ps1` | `wc` | Planned | Start with `-l`, `-w`, `-c` |
 | 1.5 | `which.ps1` | `which` | Planned | Easy win and useful PATH validation |
@@ -421,6 +421,9 @@ Use this section as the running implementation history.
 - 2026-04-18 - Initial roadmap created. Status baseline established from proposed implementation plan. No command implementation completed yet.
 - 2026-04-18 - Roadmap updated to defer all PowerShell name-conflict commands to the final implementation phase. Added explicit invocation and documentation strategy for conflict commands.
 - 2026-04-18 - Added project-local multi-agent support files for Codex, GitHub Copilot, and Claude. Created shared skills under `.ai/skills/`, added `CLAUDE.md`, added `.github/copilot-instructions.md`, and updated `AGENTS.md` to reference the project-local playbooks.
+- 2026-04-18 - Completed Phase 0 scaffold items 0.1, 0.2, 0.3, 0.4, 0.5, and 0.7. Added `cmds/.gitkeep`, `config/.gitkeep`, `lib/common.ps1`, `lib/pipeline.ps1`, `tests/_TestHelpers.ps1`, `CONVENTIONS.md`, and `ADDING_COMMANDS.md`. Updated `README.md` plus mirrored docs files under `docs/` to clarify root canonical references. Linux-vs-Windows delta: conflict-name commands must still be invoked by explicit script path; no user-facing command behavior is implemented yet. Follow-up work: add `CONTRIBUTING.md` if needed, then begin Sprint 1 with `touch.ps1`.
+- 2026-04-18 - Completed item 1.1 for `touch.ps1`. Added `cmds/touch.ps1`, `tests/touch.Tests.ps1`, and `docs/touch.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default create/update behavior, multi-path handling, and `-c` / `--no-create` / `-NoCreate`. Linux-vs-Windows delta: advanced timestamp flags (`-a`, `-m`, `-d`, `-t`, `-r`) are deferred, and timestamp precision follows Windows/.NET behavior. Follow-up work: proceed to `head.ps1`.
+- 2026-04-18 - Completed item 1.2 for `head.ps1`. Added `cmds/head.ps1`, `tests/head.Tests.ps1`, and `docs/head.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default 10-line output, `-n`, file input, stdin-like pipeline input, and Linux-style multi-file headers. Linux-vs-Windows delta: byte mode (`-c`), negative counts, and quiet/verbose header controls (`-q`, `-v`) are deferred. Follow-up work: proceed to `tail.ps1`.
 
 ---
 

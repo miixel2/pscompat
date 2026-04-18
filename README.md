@@ -1,83 +1,86 @@
 # pscompat
 
-Native PowerShell implementations of Linux shell commands.  
-No WSL. No Cygwin. No external binaries — just PowerShell.
+Native PowerShell implementations of familiar Linux shell commands.
+No WSL. No Cygwin. No external binaries. Just PowerShell.
 
 ---
 
 ## Goal
 
-Bring Linux CLI behavior to Windows — output format, exit codes, and pipeline semantics — using only native PowerShell 5.1+.
+Bring Linux CLI behavior to Windows with stable output shape, exit codes, and pipeline semantics using native PowerShell implementations that stay compatible with Windows PowerShell 5.1 first.
 
 ---
 
 ## Requirements
 
-- Windows PowerShell 5.1+ or PowerShell 7+
-- No external dependencies
+- Windows PowerShell 5.1 or PowerShell 7+
+- No external runtime dependencies
+
+---
+
+## Current Status
+
+Repository scaffolding is in place for implementation work:
+
+- `cmds/` exists for command scripts
+- `lib/` contains shared helper primitives
+- `tests/` contains shared test helpers
+- `config/` exists as the reserved home for config templates
+
+The first user-facing command is now implemented: `touch.ps1`.
 
 ---
 
 ## Usage
 
-### Option A — Run directly
+### Non-conflict commands
+
+Once a non-conflict command is implemented and `cmds\` is on `PATH`, bare command invocation is acceptable.
+
+### Conflict-name commands
+
+Some Linux command names collide with PowerShell aliases, functions, or Windows executables.
+Until a dedicated resolution strategy exists, invoke those commands by explicit script path:
 
 ```powershell
-.\cmds\tail.ps1 -n 20 .\logs\app.log
+.\cmds\tee.ps1 -Path .\out.txt
 ```
 
-### Option B — Add to PATH
-
-Add the `cmds\` directory to your `$env:PATH` in your PowerShell profile:
-
-```powershell
-$env:PATH += ";G:\My Drive\Develop\cmd\pscompat\cmds"
-```
-
-Then use commands directly:
-
-```powershell
-tail -n 20 .\logs\app.log
-grep -r "ERROR" .\logs\
-```
+Do not assume that adding `cmds\` to `PATH` will make `tee`, `sort`, `cat`, or other conflict names resolve to `pscompat`.
 
 ---
 
 ## Commands
 
 | Command | Status | Linux Equivalent | Notes |
-|---------|--------|-----------------|-------|
-| `touch` | 🚧 planned | `touch` | Create file or update timestamp |
-| `tail`  | 🚧 planned | `tail` | Output last N lines of file |
-| `grep`  | 🚧 planned | `grep` | Search text with regex |
-| `wc`    | 🚧 planned | `wc` | Word/line/char count |
-| `head`  | 🚧 planned | `head` | Output first N lines of file |
-| `tee`   | 🚧 planned | `tee` | Read stdin, write to file and stdout |
-| `which` | 🚧 planned | `which` | Locate a command in PATH |
+|---|---|---|---|
+| `touch` | done | `touch` | Create file, update timestamps, supports `-c` |
+| `head` | done | `head` | First lines from file or stdin, supports `-n` |
+| `tail` | planned | `tail` | Output last N lines of file |
+| `wc` | planned | `wc` | Word, line, and byte counts |
+| `which` | planned | `which` | Locate a command in `PATH` |
+| `grep` | planned | `grep` | Search text with regex |
+| `tee` | planned | `tee` | Conflict-name command; explicit script path required |
 
-Status: ✅ done · 🚧 planned · ⚠️ partial
+Status legend: `done`, `planned`, `partial`
 
 ---
 
 ## Project Structure
 
-```
+```text
 pscompat/
-├── cmds/         # One .ps1 per Linux command
-├── lib/          # Shared helper functions (dot-sourced)
-├── config/       # .env.example and config templates
-├── tests/        # Pester v5 test files
-└── docs/         # Per-command usage and Linux behavioral reference
+|-- cmds/                # One .ps1 per Linux command
+|-- config/              # Reserved home for config templates
+|-- docs/                # Per-command docs and reader-friendly mirrors
+|-- lib/                 # Shared helpers
+|-- tests/               # Pester tests and shared test helpers
+|-- .ai/skills/          # Project-local implementation playbooks
+|-- ADDING_COMMANDS.md   # Root workflow reference
+|-- CONVENTIONS.md       # Root coding and behavior reference
+|-- IMPLEMENTATION_ROADMAP.md
+`-- README.md
 ```
-
----
-
-## Design Principles
-
-- **Behavior-compatible** — output format and exit codes match Linux
-- **Native PowerShell** — no WSL, Cygwin, Git Bash, or Unix binaries
-- **Pipeline-friendly** — accepts `ValueFromPipeline` where Linux accepts stdin
-- **Composable** — each script works standalone and chains in pipelines
 
 ---
 
@@ -85,31 +88,32 @@ pscompat/
 
 ### Adding a new command
 
-See [`docs/ADDING_COMMANDS.md`](docs/ADDING_COMMANDS.md) for the full checklist, script template, and test template.
+See [ADDING_COMMANDS.md](ADDING_COMMANDS.md) for the command workflow and [IMPLEMENTATION_ROADMAP.md](IMPLEMENTATION_ROADMAP.md) for sequencing.
+
+### Conventions
+
+See [CONVENTIONS.md](CONVENTIONS.md) for output, exit code, path handling, and compatibility rules.
 
 ### Running tests
 
 ```powershell
-# Run all tests
 Invoke-Pester .\tests\ -Output Detailed
-
-# Run single command tests
-Invoke-Pester .\tests\tail.Tests.ps1 -Output Detailed
 ```
 
-### Conventions
+### Implemented command docs
 
-See [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md) for naming rules, output behavior, error handling, and Linux behavioral delta reference.
+- [head](docs/head.md)
+- [touch](docs/touch.md)
 
 ---
 
 ## Known Behavioral Differences
 
-| Concern | Linux | PowerShell (5.1) |
-|---------|-------|-----------------|
-| Default encoding | UTF-8 | Windows-1252 → explicit `-Encoding UTF8` required |
-| Line ending | LF | CRLF → normalized with `` `n `` or `[Environment]::NewLine` |
-| Permissions | `chmod` / `chown` | No NTFS equivalent → stubbed or mapped to ACL |
+| Concern | Linux | PowerShell 5.1 |
+|---|---|---|
+| Default encoding | UTF-8 | Requires explicit encoding choices |
+| Line ending | LF | Often defaults to CRLF |
+| Permissions | `chmod` / `chown` | Must be documented or mapped intentionally |
 
 ---
 
