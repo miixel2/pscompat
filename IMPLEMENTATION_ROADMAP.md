@@ -147,6 +147,7 @@ These are infrastructure tasks, not user-facing commands.
 | 0.5 | Align `README.md` with actual repo structure | Planned | Keep docs honest during bootstrap |
 | 0.6 | Add `CONTRIBUTING.md` skeleton | Planned | Optional but useful after scaffold is stable |
 | 0.7 | Document command-name conflict strategy in repo docs | Planned | Keep invocation expectations explicit from day one |
+| 0.8 | Add project-local multi-agent instruction and skill files | Done | Added shared `.ai/skills/`, `CLAUDE.md`, and `.github/copilot-instructions.md` |
 
 ### Phase 1 - Non-Conflict Core Primitives
 
@@ -419,6 +420,7 @@ Use this section as the running implementation history.
 
 - 2026-04-18 - Initial roadmap created. Status baseline established from proposed implementation plan. No command implementation completed yet.
 - 2026-04-18 - Roadmap updated to defer all PowerShell name-conflict commands to the final implementation phase. Added explicit invocation and documentation strategy for conflict commands.
+- 2026-04-18 - Added project-local multi-agent support files for Codex, GitHub Copilot, and Claude. Created shared skills under `.ai/skills/`, added `CLAUDE.md`, added `.github/copilot-instructions.md`, and updated `AGENTS.md` to reference the project-local playbooks.
 
 ---
 

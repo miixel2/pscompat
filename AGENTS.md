@@ -33,6 +33,29 @@ When there is a mismatch between aspirational structure in documentation and the
 
 ---
 
+## Project Agent Skills
+
+This repository includes project-local task playbooks under:
+
+- `.ai/skills/README.md`
+- `.ai/skills/pscompat-command-authoring/SKILL.md`
+- `.ai/skills/pscompat-pester-parity/SKILL.md`
+- `.ai/skills/pscompat-doc-roadmap-sync/SKILL.md`
+
+Use these files as focused workflow guides instead of repeating the same task logic from scratch every time.
+
+Selection guidance:
+
+- implementation work -> read `pscompat-command-authoring`
+- Pester work -> read `pscompat-pester-parity`
+- doc, roadmap, and close-out work -> read `pscompat-doc-roadmap-sync`
+
+Do not load every skill by default. Read only the relevant skill for the current task.
+
+These project-local skills supplement repository instructions. They do not override this file.
+
+---
+
 ## Primary Objective
 
 When adding or modifying a command, optimize in this order:
