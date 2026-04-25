@@ -7,6 +7,12 @@ Use these repository files as the instruction hierarchy:
 3. `ADDING_COMMANDS.md`
 4. `IMPLEMENTATION_ROADMAP.md`
 
+Shared SmartAIWiki:
+
+- 🧠 This project uses shared SmartAIWiki at `~/agent-wiki`.
+- 🔥 Before durable/project-context work, read `~/agent-wiki/hotcache.md`, `~/agent-wiki/AGENTS.md`, `~/agent-wiki/index.md`, and recent `~/agent-wiki/log.md`.
+- 📥 If this project creates reusable knowledge, ask whether to ingest it into `~/agent-wiki`.
+
 For focused workflow guidance, read `.ai/skills/README.md` and then only the relevant skill file:
 
 - `.ai/skills/pscompat-command-authoring/SKILL.md`

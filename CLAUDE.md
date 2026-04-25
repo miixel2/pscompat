@@ -13,6 +13,12 @@ Follow these files in this order:
 
 If instructions conflict, prefer the higher item in the list.
 
+## Shared SmartAIWiki
+
+- 🧠 This project uses shared SmartAIWiki at `~/agent-wiki`.
+- 🔥 Before durable/project-context work, read `~/agent-wiki/hotcache.md`, `~/agent-wiki/AGENTS.md`, `~/agent-wiki/index.md`, and recent `~/agent-wiki/log.md`.
+- 📥 If this project creates reusable knowledge, ask whether to ingest it into `~/agent-wiki`.
+
 ## Project-Local Skills
 
 This repository keeps reusable agent playbooks under `.ai/skills/`.

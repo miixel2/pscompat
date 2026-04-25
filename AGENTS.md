@@ -33,6 +33,14 @@ When there is a mismatch between aspirational structure in documentation and the
 
 ---
 
+## Shared SmartAIWiki
+
+- 🧠 This project uses shared SmartAIWiki at `~/agent-wiki`.
+- 🔥 Before durable/project-context work, read `~/agent-wiki/hotcache.md`, `~/agent-wiki/AGENTS.md`, `~/agent-wiki/index.md`, and recent `~/agent-wiki/log.md`.
+- 📥 If this project creates reusable knowledge, ask whether to ingest it into `~/agent-wiki`.
+
+---
+
 ## Project Agent Skills
 
 This repository includes project-local task playbooks under:
