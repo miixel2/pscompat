@@ -167,10 +167,10 @@ Implement high-value text processing that does not rely on conflicting command n
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 2.1 | `grep.ps1` | `grep` | Planned | Highest priority in this phase |
-| 2.2 | `cut.ps1` | `cut` | Planned | Delimiter and field extraction first |
-| 2.3 | `uniq.ps1` | `uniq` | Planned | Must work independently of `sort.ps1` existing |
-| 2.4 | `tr.ps1` | `tr` | Planned | Translation and deletion only |
+| 2.1 | `grep.ps1` | `grep` | Done | Supports regex search, file/stdin input, multi-file prefixes, `-i`, `-n`, and `-v` |
+| 2.2 | `cut.ps1` | `cut` | Done | Supports delimiter and field extraction with simple lists and ranges |
+| 2.3 | `uniq.ps1` | `uniq` | Done | Supports adjacent duplicate filtering with `-c`, `-d`, `-u`, and `-i` |
+| 2.4 | `tr.ps1` | `tr` | Done | Supports character translation, deletion, simple ranges, and common escapes |
 
 ### Phase 3 - Non-Conflict System and Utility Commands
 
@@ -427,6 +427,10 @@ Use this section as the running implementation history.
 - 2026-04-18 - Completed item 1.3 for `tail.ps1`. Added `cmds/tail.ps1`, `tests/tail.Tests.ps1`, and `docs/tail.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default last-10-line output, `-n`, file input, stdin-like pipeline input, `-n 0`, and Linux-style multi-file headers. Linux-vs-Windows delta: follow mode (`-f`), byte mode (`-c`), and relative count forms such as `-n +5` are deferred. Follow-up work: proceed to `wc.ps1`.
 - 2026-04-18 - Completed item 1.4 for `wc.ps1`. Added `cmds/wc.ps1`, `tests/wc.Tests.ps1`, and `docs/wc.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: default line/word/byte output, explicit `-l` / `-w` / `-c`, stdin-like pipeline input, multi-file processing, and `total`. Linux-vs-Windows delta: `-m` and `-L` are deferred, and pipeline counting under native PowerShell remains a reconstructed text stream rather than raw Unix pipe bytes. Follow-up work: proceed to `which.ps1`.
 - 2026-04-18 - Completed item 1.5 for `which.ps1`. Added `cmds/which.ps1`, `tests/which.Tests.ps1`, and `docs/which.md`; updated `README.md`, `IMPLEMENTATION_ROADMAP.md`, and `tests/_TestHelpers.ps1`. Scope implemented: first-match PATH resolution for applications and external scripts, multi-name processing, and non-zero exit on misses. Linux-vs-Windows delta: `-a` is deferred, and PowerShell alias/function resolution is intentionally excluded to keep PATH behavior predictable. Follow-up work: Sprint 1 core primitives are complete; proceed to `grep.ps1`.
+- 2026-05-02 - Completed item 2.1 for `grep.ps1`. Added `cmds/grep.ps1`, `tests/grep.Tests.ps1`, and `docs/grep.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: .NET regex search, file input, stdin-like pipeline input, multi-file prefixes, `-i`, `-n`, and `-v`. Linux-vs-Windows delta: .NET regex syntax differs from GNU grep in edge cases; recursive mode, fixed-string mode, count mode, quiet mode, and binary file handling are deferred. Follow-up work: proceed to `cut.ps1`.
+- 2026-05-02 - Completed item 2.2 for `cut.ps1`. Added `cmds/cut.ps1`, `tests/cut.Tests.ps1`, and `docs/cut.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: delimiter mode with `-d`, field mode with `-f`, comma-separated field lists, simple ranges, file input, and stdin-like pipeline input. Linux-vs-Windows delta: byte mode, character mode, suppress-undelimited mode, complement mode, and custom output delimiters are deferred. Follow-up work: proceed to `uniq.ps1`.
+- 2026-05-02 - Completed item 2.3 for `uniq.ps1`. Added `cmds/uniq.ps1`, `tests/uniq.Tests.ps1`, and `docs/uniq.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: adjacent duplicate filtering independent of `sort.ps1`, one input file or stdin-like pipeline input, `-c`, `-d`, `-u`, and `-i`. Linux-vs-Windows delta: skip-field/skip-character options, repeated group variants, and output-file operand support are deferred. Follow-up work: proceed to `tr.ps1`.
+- 2026-05-02 - Completed item 2.4 for `tr.ps1`. Added `cmds/tr.ps1`, `tests/tr.Tests.ps1`, and `docs/tr.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: stdin-like character translation, deletion with `-d`, simple ascending ranges, and common escapes. Linux-vs-Windows delta: complement mode, squeeze mode, character classes, octal escapes, and raw Unix byte-stream parity are deferred. Follow-up work: Sprint 2 search and filters are complete; proceed to `ln.ps1`.
 
 ---
 

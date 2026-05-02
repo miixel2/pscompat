@@ -27,7 +27,7 @@ Repository scaffolding is in place for implementation work:
 - `tests/` contains shared test helpers
 - `config/` exists as the reserved home for config templates
 
-The first user-facing command is now implemented: `touch.ps1`.
+Phase 1 core primitives and Phase 2 search/filter commands are implemented.
 
 ---
 
@@ -59,7 +59,10 @@ Do not assume that adding `cmds\` to `PATH` will make `tee`, `sort`, `cat`, or o
 | `tail` | done | `tail` | Last lines from file or stdin, supports `-n` |
 | `wc` | done | `wc` | Line, word, and byte counts with `total` support |
 | `which` | done | `which` | Locate a command in `PATH` |
-| `grep` | planned | `grep` | Search text with regex |
+| `grep` | done | `grep` | Regex search with `-i`, `-n`, and `-v` |
+| `cut` | done | `cut` | Delimiter and field extraction |
+| `uniq` | done | `uniq` | Adjacent duplicate filtering |
+| `tr` | done | `tr` | Character translation and deletion |
 | `tee` | planned | `tee` | Conflict-name command; explicit script path required |
 
 Status legend: `done`, `planned`, `partial`
@@ -103,8 +106,12 @@ Invoke-Pester .\tests\ -Output Detailed
 ### Implemented command docs
 
 - [head](docs/head.md)
+- [grep](docs/grep.md)
+- [cut](docs/cut.md)
 - [tail](docs/tail.md)
 - [touch](docs/touch.md)
+- [tr](docs/tr.md)
+- [uniq](docs/uniq.md)
 - [wc](docs/wc.md)
 - [which](docs/which.md)
 
