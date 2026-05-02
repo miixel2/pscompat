@@ -28,6 +28,7 @@ Repository scaffolding is in place for implementation work:
 - `config/` exists as the reserved home for config templates
 
 Phase 1 core primitives and Phase 2 search/filter commands are implemented.
+Phase 3 implementation has started with `ln`.
 
 ---
 
@@ -63,6 +64,7 @@ Do not assume that adding `cmds\` to `PATH` will make `tee`, `sort`, `cat`, or o
 | `cut` | done | `cut` | Delimiter and field extraction |
 | `uniq` | done | `uniq` | Adjacent duplicate filtering |
 | `tr` | done | `tr` | Character translation and deletion |
+| `ln` | done | `ln` | Hard link default, supports `-s` and `-f` |
 | `tee` | planned | `tee` | Conflict-name command; explicit script path required |
 
 Status legend: `done`, `planned`, `partial`
@@ -114,6 +116,7 @@ Invoke-Pester .\tests\ -Output Detailed
 - [uniq](docs/uniq.md)
 - [wc](docs/wc.md)
 - [which](docs/which.md)
+- [ln](docs/ln.md)
 
 ---
 

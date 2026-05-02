@@ -178,7 +178,7 @@ These are useful and avoid immediate naming conflicts, but still need careful Wi
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 3.1 | `ln.ps1` | `ln` | Planned | Document privilege and capability limitations |
+| 3.1 | `ln.ps1` | `ln` | Done | Added scoped hard/symbolic link support with `-f` replacement |
 | 3.2 | `chmod.ps1` | `chmod` | Planned | Stub or warn-only unless ACL mapping is well-defined |
 | 3.3 | `env.ps1` | `env` | Planned | Print vars and optionally run child command |
 | 3.4 | `uptime.ps1` | `uptime` | Planned | Stable output format matters |
@@ -191,32 +191,34 @@ These commands should stay intentionally scoped and explicitly documented.
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 4.1 | `xargs.ps1` | `xargs` | Planned | Start with whitespace/newline-safe subset only |
+| 4.1 | `xargs.ps1` | `xargs` | Planned | Next after Phase 3: start with whitespace/newline-safe subset only |
 | 4.2 | `sed.ps1` | `sed` | Planned | Start with simple substitution only |
 | 4.3 | `awk.ps1` | `awk` | Planned | Must be intentionally limited in scope |
 
-### Phase 5 - Conflict Command Implementation
+### Phase 5 - Conflict Command Implementation (Suspended)
 
 All commands in this phase conflict with an existing PowerShell alias, function, or Windows executable.
 
-Implement them last, and document invocation strategy clearly.
+This phase is currently **suspended** per project direction; conflict-name command implementation is deferred indefinitely unless explicitly re-enabled.
+
+When/if resumed, implement them last and document invocation strategy clearly.
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 5.1 | `cat.ps1` | `cat` | Planned | Useful, but conflicts with alias |
-| 5.2 | `echo.ps1` | `echo` | Planned | Start with plain output and `-n` only |
-| 5.3 | `sort.ps1` | `sort` | Planned | Focus on text output parity, not object sorting |
-| 5.4 | `find.ps1` | `find` | Planned | Tight scope only; also conflicts with `find.exe` |
-| 5.5 | `tee.ps1` | `tee` | Planned | Useful in pipelines, but name collides with alias |
-| 5.6 | `mkdir.ps1` | `mkdir` | Planned | Support `-p` semantics |
-| 5.7 | `cp.ps1` | `cp` | Planned | Start with file copy, then recursive support |
-| 5.8 | `mv.ps1` | `mv` | Planned | Handle same-volume and cross-volume behavior carefully |
-| 5.9 | `rm.ps1` | `rm` | Planned | `-WhatIf` and `SupportsShouldProcess` required |
-| 5.10 | `ps.ps1` | `ps` | Planned | Define an output contract first |
-| 5.11 | `kill.ps1` | `kill` | Planned | Map supported signals only |
-| 5.12 | `diff.ps1` | `diff` | Planned | Focus on useful unified diff output |
-| 5.13 | `tar.ps1` | `tar` | Planned | Built-in archive APIs only |
-| 5.14 | `curl.ps1` | `curl` | Planned | Documented subset only |
+| 5.1 | `cat.ps1` | `cat` | Deferred | Phase suspended: conflict command implementation paused |
+| 5.2 | `echo.ps1` | `echo` | Deferred | Phase suspended: Start with plain output and `-n` only |
+| 5.3 | `sort.ps1` | `sort` | Deferred | Phase suspended: Focus on text output parity, not object sorting |
+| 5.4 | `find.ps1` | `find` | Deferred | Phase suspended: Tight scope only; also conflicts with `find.exe` |
+| 5.5 | `tee.ps1` | `tee` | Deferred | Phase suspended: Useful in pipelines, but name collides with alias |
+| 5.6 | `mkdir.ps1` | `mkdir` | Deferred | Phase suspended: Support `-p` semantics |
+| 5.7 | `cp.ps1` | `cp` | Deferred | Phase suspended: Start with file copy, then recursive support |
+| 5.8 | `mv.ps1` | `mv` | Deferred | Phase suspended: Handle same-volume and cross-volume behavior carefully |
+| 5.9 | `rm.ps1` | `rm` | Deferred | Phase suspended: `-WhatIf` and `SupportsShouldProcess` required |
+| 5.10 | `ps.ps1` | `ps` | Deferred | Phase suspended: Define an output contract first |
+| 5.11 | `kill.ps1` | `kill` | Deferred | Phase suspended: Map supported signals only |
+| 5.12 | `diff.ps1` | `diff` | Deferred | Phase suspended: Focus on useful unified diff output |
+| 5.13 | `tar.ps1` | `tar` | Deferred | Phase suspended: Built-in archive APIs only |
+| 5.14 | `curl.ps1` | `curl` | Deferred | Phase suspended: Documented subset only |
 
 ---
 
@@ -261,7 +263,7 @@ Use this sprint order unless a specific user request overrides it:
 | Sprint 2 | `grep`, `cut`, `uniq`, `tr` |
 | Sprint 3 | `ln`, `chmod`, `env`, `uptime`, `df`, `du` |
 | Sprint 4 | `xargs`, `sed`, `awk` |
-| Sprint 5 | conflict commands only: `cat`, `echo`, `sort`, `find`, `tee`, `mkdir`, `cp`, `mv`, `rm`, `ps`, `kill`, `diff`, `tar`, `curl` |
+| Sprint 5 | **Suspended** (conflict commands deferred indefinitely) |
 
 Rationale:
 
@@ -269,7 +271,7 @@ Rationale:
 - Sprint 2 establishes the core non-conflict text pipeline.
 - Sprint 3 builds out useful non-conflict system commands before risky collisions.
 - Sprint 4 keeps advanced scoped work ahead of name-conflict commands.
-- Sprint 5 defers all conflicting command names until the end.
+- Sprint 5 is currently suspended; conflicting command names are deferred indefinitely.
 
 ---
 
@@ -433,6 +435,12 @@ Use this section as the running implementation history.
 - 2026-05-02 - Completed item 2.4 for `tr.ps1`. Added `cmds/tr.ps1`, `tests/tr.Tests.ps1`, and `docs/tr.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: stdin-like character translation, deletion with `-d`, simple ascending ranges, and common escapes. Linux-vs-Windows delta: complement mode, squeeze mode, character classes, octal escapes, and raw Unix byte-stream parity are deferred. Follow-up work: Sprint 2 search and filters are complete; proceed to `ln.ps1`.
 
 ---
+
+- 2026-05-02 - Phase 5 (conflict command implementation) suspended by project direction. Updated all Phase 5 items from `Planned` to `Deferred` and marked Sprint 5 as suspended. Follow-up work: continue with Phase 3 non-conflict commands starting at `ln.ps1`.
+
+- 2026-05-02 - Execution restarted on non-conflict roadmap: set item 3.1 (`ln.ps1`) to `In Progress` as the active implementation target, with Phase 4 queued immediately after Phase 3 completion starting from item 4.1 (`xargs.ps1`).
+
+- 2026-05-02 - Completed item 3.1 for `ln.ps1`. Added `cmds/ln.ps1`, `tests/ln.Tests.ps1`, and `docs/ln.md`; updated `README.md` and `IMPLEMENTATION_ROADMAP.md`. Scope implemented: `TARGET LINK_NAME` form, hard-link default, symbolic links with `-s`, and destination replacement with `-f`. Linux-vs-Windows delta: behavior depends on filesystem/privilege support, multi-target forms are deferred. Follow-up work: proceed to `chmod.ps1`.
 
 ## Strategy Decisions
 
