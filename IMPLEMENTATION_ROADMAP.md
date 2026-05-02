@@ -178,7 +178,7 @@ These are useful and avoid immediate naming conflicts, but still need careful Wi
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 3.1 | `ln.ps1` | `ln` | Planned | Document privilege and capability limitations |
+| 3.1 | `ln.ps1` | `ln` | In Progress | Active now: document privilege and capability limitations |
 | 3.2 | `chmod.ps1` | `chmod` | Planned | Stub or warn-only unless ACL mapping is well-defined |
 | 3.3 | `env.ps1` | `env` | Planned | Print vars and optionally run child command |
 | 3.4 | `uptime.ps1` | `uptime` | Planned | Stable output format matters |
@@ -191,7 +191,7 @@ These commands should stay intentionally scoped and explicitly documented.
 
 | ID | Script | Linux Command | Status | Notes |
 |---|---|---|---|---|
-| 4.1 | `xargs.ps1` | `xargs` | Planned | Start with whitespace/newline-safe subset only |
+| 4.1 | `xargs.ps1` | `xargs` | Planned | Next after Phase 3: start with whitespace/newline-safe subset only |
 | 4.2 | `sed.ps1` | `sed` | Planned | Start with simple substitution only |
 | 4.3 | `awk.ps1` | `awk` | Planned | Must be intentionally limited in scope |
 
@@ -437,6 +437,8 @@ Use this section as the running implementation history.
 ---
 
 - 2026-05-02 - Phase 5 (conflict command implementation) suspended by project direction. Updated all Phase 5 items from `Planned` to `Deferred` and marked Sprint 5 as suspended. Follow-up work: continue with Phase 3 non-conflict commands starting at `ln.ps1`.
+
+- 2026-05-02 - Execution restarted on non-conflict roadmap: set item 3.1 (`ln.ps1`) to `In Progress` as the active implementation target, with Phase 4 queued immediately after Phase 3 completion starting from item 4.1 (`xargs.ps1`).
 
 ## Strategy Decisions
 
